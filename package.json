@@ -1,0 +1,22 @@
+{
+  "name": "NuxtJSMap",
+  "version": "1.0.0",
+  "description": "NuxtJS Map with Firebase",
+  "author": "Pawat Saengduan",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "firebase": "^7.15.1",
+    "nuxt": "^2.12.2",
+    "nuxt-leaflet": "^0.0.11"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.11.2"
+  }
+}
