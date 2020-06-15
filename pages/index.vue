@@ -2,7 +2,7 @@
   <div style="width: 100%; height: 100%;" class="noScroll">
     <v-app id="app">
       <v-row justify="center">
-        <v-dialog v-model="dialog" max-width="21.4%" max-height="23%">
+        <v-dialog v-model="dialog" max-width="auto" max-height="auto">
           <v-card>
             <v-card-actions>
               <v-btn color="white darken-2" @click="dialog = false">
@@ -12,10 +12,13 @@
             </v-card-actions>
             <v-card-title class="headline"> {{ pname }}</v-card-title>
             <v-card-subtitle>
-              <p style="display: inline;color: rgb(210, 210, 210);" v-if="pact">
+              <p
+                style="display: inline; color: rgb(210, 210, 210);"
+                v-if="pact"
+              >
                 บริการ
               </p>
-              <p style="display: inline;color: rgb(210, 210, 210);" v-else>
+              <p style="display: inline; color: rgb(210, 210, 210);" v-else>
                 ไม่บริการ
               </p>
             </v-card-subtitle>
@@ -56,7 +59,7 @@
         :bounds="bounds"
         :min-zoom="minZoom"
         :max-zoom="maxZoom"
-        style="width: 100%;z-index: 100;"
+        style="width: 100%; z-index: 100;"
       >
         <l-control-layers
           :position="layersPosition"
@@ -219,7 +222,7 @@ import {
   LControlZoom,
   LControlAttribution,
   LControlScale,
-  LControlLayers
+  LControlLayers,
 } from "vue2-leaflet";
 import axios from "axios";
 
@@ -227,6 +230,7 @@ import * as firebase from "firebase/app";
 
 import "firebase/analytics";
 import "firebase/firestore";
+import "firebase/firebase-functions";
 import "~/plugins/firebase.js";
 
 const markersAlert = [];
@@ -240,14 +244,14 @@ const tileProviders = [
     visible: true,
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a>',
-    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
   },
   {
     name: "Open Street Map (Default)",
     visible: false,
     attribution:
       '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   },
   {
     name: "Open Street Map (Gray)",
@@ -255,8 +259,8 @@ const tileProviders = [
     attribution:
       'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     url:
-      "https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/{z}/{x}/{y}?access_token=sk.eyJ1IjoicGF3YXQiLCJhIjoiY2s4cjBoMDM5MDUwMzNmcW45ZHd0YWppMyJ9.mEct1P_2b2sLI_5MBrpkRA"
-  }
+      "https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/{z}/{x}/{y}?access_token=sk.eyJ1IjoicGF3YXQiLCJhIjoiY2s4cjBoMDM5MDUwMzNmcW45ZHd0YWppMyJ9.mEct1P_2b2sLI_5MBrpkRA",
+  },
 ];
 export default {
   name: "App",
@@ -271,10 +275,17 @@ export default {
     LControlZoom,
     LControlAttribution,
     LControlScale,
-    LControlLayers
+    LControlLayers,
   },
   mounted() {
     this.findFromFirestore();
+  },
+  created() {
+    // firebase.functions.firestore.documents.onCreate((snap, context) => {
+    //   this.findFromFirestore();
+    // })
+
+    // this.interval = setInterval(() => this.findFromFirestore(), 5000);
   },
   methods: {
     async findFromFirestore() {
@@ -285,19 +296,18 @@ export default {
           .collection("geolocation")
           .where("type", "==", 0)
           .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               markersAlert.push({
                 position: {
                   lat: doc.data().loc.Rc,
-                  lng: doc.data().loc.Ac
+                  lng: doc.data().loc.Ac,
                 },
                 tooltip: doc.data().name,
                 types: "alert",
                 visible: true,
-                draggable: false
+                draggable: false,
               });
-              console.log(doc.data());
             });
           });
 
@@ -307,19 +317,18 @@ export default {
           .collection("geolocation")
           .where("type", "==", 1)
           .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               markersFire.push({
                 position: {
                   lat: doc.data().loc.Rc,
-                  lng: doc.data().loc.Ac
+                  lng: doc.data().loc.Ac,
                 },
                 tooltip: doc.data().name,
                 types: "fire",
                 visible: true,
-                draggable: false
+                draggable: false,
               });
-              console.log(doc.data());
             });
           });
 
@@ -329,19 +338,18 @@ export default {
           .collection("geolocation")
           .where("type", "==", 2)
           .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               markersRadio.push({
                 position: {
                   lat: doc.data().loc.Rc,
-                  lng: doc.data().loc.Ac
+                  lng: doc.data().loc.Ac,
                 },
                 tooltip: doc.data().name,
                 types: "radio",
                 visible: true,
-                draggable: false
+                draggable: false,
               });
-              console.log(doc.data());
             });
           });
 
@@ -351,85 +359,25 @@ export default {
           .collection("geolocation")
           .where("type", "==", 3)
           .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
               markersTree.push({
                 position: {
                   lat: doc.data().loc.Rc,
-                  lng: doc.data().loc.Ac
+                  lng: doc.data().loc.Ac,
                 },
                 tooltip: doc.data().name,
                 types: "tree",
                 visible: true,
-                draggable: false
+                draggable: false,
               });
-              console.log(doc.data());
             });
           });
       } catch (e) {
-        console.log("[ERROR] ");
         console.log(e);
         return;
       }
-      // try {
-      //   // this.$fireStore.collection("geolocation").where("type", "==", 0).get().then(function(querySnapshot) {
-      //   //   querySnapshot.forEach(function(docs) {
-      //   //     markersAlert.push({
-      //   //       position: {
-      //   //         lat: docs.data().loc.Rc,
-      //   //         lng: docs.data().loc.Ac
-      //   //       },
-      //   //       types: "alert",
-      //   //       visible: true,
-      //   //       draggable: false
-      //   //     })
-      //   //   })
-      //   // })
-      //   // this.$fireStore.collection("geolocation").where("type", "==", 1).get().then(function(querySnapshot) {
-      //   //   querySnapshot.forEach(function(docs) {
-      //   //     markersFire.push({
-      //   //       position: {
-      //   //         lat: docs.data().loc.Rc,
-      //   //         lng: docs.data().loc.Ac
-      //   //       },
-      //   //       types: "fire",
-      //   //       visible: true,
-      //   //       draggable: false
-      //   //     })
-      //   //   })
-      //   // })
-      //   // this.$fireStore.collection("geolocation").where("type", "==", 2).get().then(function(querySnapshot) {
-      //   //   querySnapshot.forEach(function(docs) {
-      //   //     markersRadio.push({
-      //   //       position: {
-      //   //         lat: docs.data().loc.Rc,
-      //   //         lng: docs.data().loc.Ac
-      //   //       },
-      //   //       types: "radio",
-      //   //       visible: true,
-      //   //       draggable: false
-      //   //     })
-      //   //   })
-      //   // })
-      //   // this.$fireStore.collection("geolocation").where("type", "==", 3).get().then(function(querySnapshot) {
-      //   //   querySnapshot.forEach(function(docs) {
-      //   //     console.log()
-      //   //     markersTree.push({
-      //   //       position: {
-      //   //         lat: docs.data().loc.Rc,
-      //   //         lng: docs.data().loc.Ac
-      //   //       },
-      //   //       types: "tree",
-      //   //       visible: true,
-      //   //       draggable: false
-      //   //     })
-      //   //   })
-      //   // })
-      // } catch (e) {
-      //   console.log(e)
-      //   return
-      // }
-    }
+    },
   },
   data() {
     return {
@@ -440,7 +388,7 @@ export default {
       mapOptions: {
         zoomControl: false,
         attributionControl: false,
-        zoomSnap: true
+        zoomSnap: true,
       },
       zoom: 13,
       minZoom: 0.5,
@@ -466,62 +414,62 @@ export default {
           id: "alr",
           markers: markersAlert,
           visible: true,
-          markersVisible: true
-        }
+          markersVisible: true,
+        },
       ],
       fire: [
         {
           id: "fir",
           markers: markersFire,
           visible: true,
-          markersVisible: true
-        }
+          markersVisible: true,
+        },
       ],
       radio: [
         {
           id: "rad",
           markers: markersRadio,
           visible: true,
-          markersVisible: true
-        }
+          markersVisible: true,
+        },
       ],
       tree: [
         {
           id: "trb",
           markers: markersTree,
           visible: true,
-          markersVisible: true
-        }
+          markersVisible: true,
+        },
       ],
       iconAlert: icon({
         iconUrl: require("~/assets/alert.png"),
         iconSize: [36, 32],
         iconAnchor: [22, 36],
         shadowAnchor: [4, 62],
-        popupAnchor: [-3, -76]
+        popupAnchor: [-3, -76],
       }),
       iconFire: icon({
         iconUrl: require("~/assets/fire.png"),
         iconSize: [36, 32],
         iconAnchor: [22, 36],
         shadowAnchor: [4, 62],
-        popupAnchor: [-3, -76]
+        popupAnchor: [-3, -76],
       }),
       iconRadio: icon({
         iconUrl: require("~/assets/radio.png"),
         iconSize: [36, 32],
         iconAnchor: [22, 36],
         shadowAnchor: [4, 62],
-        popupAnchor: [-3, -76]
+        popupAnchor: [-3, -76],
       }),
       iconTree: icon({
         iconUrl: require("~/assets/tree.png"),
         iconSize: [36, 32],
         iconAnchor: [22, 36],
         shadowAnchor: [4, 62],
-        popupAnchor: [-3, -76]
+        popupAnchor: [-3, -76],
       }),
-      bounds: latLngBounds()
+      bounds: latLngBounds(),
     };
   },
   computed: {
@@ -530,8 +478,8 @@ export default {
     },
     dynamicAnchor() {
       return [this.iconSize / 2, this.iconSize * 1.15];
-    }
-  }
+    },
+  },
 };
 </script>
 

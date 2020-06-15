@@ -2,16 +2,17 @@ import * as firebase from "firebase/app";
 
 import "firebase/analytics";
 import "firebase/firestore";
+import "firebase/firebase-functions";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBGEah_5omm5NtPOODFPlRkUOw5nef3oYA",
-  authDomain: "nn-projects-2.firebaseapp.com",
-  databaseURL: "https://nn-projects-2.firebaseio.com",
-  projectId: "nn-projects-2",
-  storageBucket: "nn-projects-2.appspot.com",
-  messagingSenderId: "710752818845",
-  appId: "1:710752818845:web:b29f1167f38b55af21e674",
-  measurementId: "G-6Q547468F2"
+  apiKey: "AIzaSyAq3eNRL8T360kZpeyS7gRX1IApHddIfi4",
+  authDomain: "vuemap-c0443.firebaseapp.com",
+  databaseURL: "https://vuemap-c0443.firebaseio.com",
+  projectId: "vuemap-c0443",
+  storageBucket: "vuemap-c0443.appspot.com",
+  messagingSenderId: "244429409675",
+  appId: "1:244429409675:web:89a0d91bc1caf86622b38e",
+  measurementId: "G-0QN5QESEHG"
 };
 
 firebase.initializeApp(firebaseConfig);
