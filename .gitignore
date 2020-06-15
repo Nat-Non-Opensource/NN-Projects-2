@@ -110,5 +110,4 @@ samples/ios/Continote/Continote/FCNContinue.h
 samples/ios/Continote/Continote/FCNContinue.m
 
 # Firebase Hosting
-.firebaserc
 firebase-debug.log
