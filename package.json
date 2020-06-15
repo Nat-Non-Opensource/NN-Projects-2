@@ -18,6 +18,8 @@
     "escape-html": "^1.0.3"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.11.2"
+    "@babel/runtime-corejs2": "^7.10.2",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "core-js": "2"
   }
 }
