@@ -22,11 +22,11 @@
                             ไม่บริการ
                           </p>
                         </v-card-subtitle> -->
-                        <v-card-text
-                        ><p v-if="ptype === 'alert'">
-                            <img src="~/assets/alert.png">
-                            Alert: แจ้งเตือนภัย
-                        </p>
+                        <v-card-text>
+                            <p v-if="ptype === 'alert'">
+                                <img src="~/assets/alert.png">
+                                Alert: แจ้งเตือนภัย
+                            </p>
                             <p v-else-if="ptype === 'fire'">
                                 <img src="~/assets/fire.png">
                                 Fire: ไฟใหม้
@@ -42,6 +42,7 @@
                             <p v-else>{{ ptype }}</p>
                         </v-card-text>
                         <v-card-text>
+
                             <!--              <audio controls>-->
                             <!--                <source :src="require('@/assets/sound.wav') type="audio/wav" style="width:100%;">-->
                             <!--                Your browser does not support the audio element.-->
@@ -122,17 +123,8 @@
                                 :draggable="marker.draggable"
                                 :lat-lng="marker.position"
                                 :icon="iconAlert"
-                                @click="
-                dialog = true;
-                pname = marker.tooltip;
-                ptype = marker.type;
-                pdesc = marker.desc;
-                plat = marker.position.lat;
-                plng = marker.position.lng;
-              "
-                        >
-                            <l-tooltip :content="marker.tooltip"
-                            />
+                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; ">
+                            <l-tooltip :content="marker.tooltip"/>
                         </l-marker>
                     </l-layer-group>
                 </l-layer-group>
@@ -151,14 +143,7 @@
                                 :draggable="item.draggable"
                                 :lat-lng="marker.position"
                                 :icon="iconFire"
-                                @click="
-                dialog = true;
-                pname = marker.tooltip;
-                ptype = marker.type;
-                pdesc = marker.desc;
-                plat = marker.position.lat;
-                plng = marker.position.lng;
-              "
+                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "
                         />
                     </l-layer-group>
                 </l-layer-group>
@@ -167,8 +152,7 @@
                         :key="item.id"
                         :visible.sync="item.visible"
                         layer-type="overlay"
-                        name="Radio: วิทยุ"
-                >
+                        name="Radio: วิทยุ">
                     <l-layer-group :visible="item.markersVisible">
                         <l-marker
                                 v-for="marker in item.markers"
@@ -177,14 +161,7 @@
                                 :draggable="marker.draggable"
                                 :lat-lng="marker.position"
                                 :icon="iconRadio"
-                                @click="
-                dialog = true;
-                pname = marker.tooltip;
-                ptype = marker.type;
-                pdesc = marker.desc;
-                plat = marker.position.lat;
-                plng = marker.position.lng;
-              "
+                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "
                         />
                     </l-layer-group>
                 </l-layer-group>
@@ -203,14 +180,7 @@
                                 :draggable="marker.draggable"
                                 :lat-lng="marker.position"
                                 :icon="iconTree"
-                                @click="
-                dialog = true;
-                pname = marker.tooltip;
-                ptype = marker.type;
-                pdesc = marker.desc;
-                plat = marker.position.lat;
-                plng = marker.position.lng;
-              "
+                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "
                         />
                     </l-layer-group>
                 </l-layer-group>
@@ -324,16 +294,13 @@
                 if (data.type === 0) {
                   obj.type = "alert";
                   markersAlert.push(obj);
-                }
-                else if (data.type === 1) {
+                } else if (data.type === 1) {
                   obj.type = "fire";
                   markersFire.push(obj);
-                }
-                else if (data.type === 2) {
+                } else if (data.type === 2) {
                   obj.type = "radio";
                   markersRadio.push(obj);
-                }
-                else if (data.type === 3) {
+                } else if (data.type === 3) {
                   obj.type = "tree";
                   markersTree.push(obj);
                 }
