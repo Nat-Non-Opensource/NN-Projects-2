@@ -38,17 +38,31 @@
                 <img src="~/assets/tree.png">
                 Tree: ต้นไม้
               </p>
-              <p v-else>{{ ptype }}</p></v-card-text
-            >
-            <v-card-text> คำอธิบาย: </v-card-text>
-            <v-card-text>
-              <div class="pre-formatted">{{ pdesc }}</div>
+              <p v-else>{{ ptype }}</p>
             </v-card-text>
             <v-card-text>
-              <a :href="'https://www.google.com/maps/dir//' + plat + ',' + plng"
-                >นำทางไปที่ตำแหน่ง</a
-              >
+<!--              <audio controls>-->
+<!--                <source :src="require('@/assets/sound.wav') type="audio/wav" style="width:100%;">-->
+<!--                Your browser does not support the audio element.-->
+
+<!--                Your browser does not support the audio element.-->
+<!--              </audio>-->
+              <audio src="@/assets/sound.wav" controls></audio>
             </v-card-text>
+
+
+            <!--            <v-card-text> คำอธิบาย: </v-card-text>-->
+<!--            <v-card-text>-->
+<!--              <div class="pre-formatted">{{ pdesc }}</div>-->
+<!--            </v-card-text>-->
+<!--            <v-card-text>-->
+<!--              <a :href="'https://www.google.com/maps/dir//' + plat + ',' + plng"-->
+<!--                >นำทางไปที่ตำแหน่ง</a-->
+<!--              >-->
+<!--            </v-card-text>-->
+<!--            <v-card-text>-->
+<!--              Picture:-->
+<!--            </v-card-text>-->
           </v-card>
         </v-dialog>
       </v-row>
