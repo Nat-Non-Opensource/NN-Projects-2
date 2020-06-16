@@ -52,7 +52,6 @@
                             <audio src="https://firebasestorage.googleapis.com/v0/b/vuemap-c0443.appspot.com/o/2020-06-15T07_37_45.354Z.wav?alt=media&token=c5bb3e7a-62e4-4f77-9fa0-c9cc6110b8b0" controls></audio>
                         </v-card-text>
 
-
                         <!--            <v-card-text> คำอธิบาย: </v-card-text>-->
                         <!--            <v-card-text>-->
                         <!--              <div class="pre-formatted">{{ pdesc }}</div>-->
@@ -75,13 +74,11 @@
                     :bounds="bounds"
                     :min-zoom="minZoom"
                     :max-zoom="maxZoom"
-                    style="width: 100%; z-index: 100;"
-            >
+                    style="width: 100%; z-index: 100;">
                 <l-control-layers
                         :position="layersPosition"
                         :collapsed="false"
-                        :sort-layers="true"
-                />
+                        :sort-layers="true"/>
                 <l-tile-layer
                         v-for="tileProvider in tileProviders"
                         :key="tileProvider.name"
@@ -89,13 +86,11 @@
                         :visible="tileProvider.visible"
                         :attribution="tileProvider.attribution"
                         :url="tileProvider.url"
-                        layer-type="base"
-                />
+                        layer-type="base"/>
                 <l-control-zoom :position="zoomPosition"/>
                 <l-control-attribution
                         :position="attributionPosition"
-                        :prefix="attributionPrefix"
-                />
+                        :prefix="attributionPrefix"/>
                 <l-control-scale :imperial="imperial"/>
                 <l-marker
                         v-for="marker in markers"
@@ -103,18 +98,18 @@
                         :visible="marker.visible"
                         :draggable="marker.draggable"
                         :lat-lng.sync="marker.position"
-                        :icon="marker.icon"
-                >
+                        :icon="marker.icon">
                     <l-tooltip :content="marker.tooltip"/>
                     <l-popup :content="marker.tooltip"/>
                 </l-marker>
+
+                <!-- Alert Group -->
                 <l-layer-group
                         v-for="item in alert"
                         :key="item.id"
                         :visible.sync="item.visible"
                         layer-type="overlay"
-                        name="Alert: แจ้งเตือนภัย"
-                >
+                        name="Alert: แจ้งเตือนภัย">
                     <l-layer-group :visible="item.markersVisible">
                         <l-marker
                                 v-for="marker in item.markers"
@@ -128,13 +123,14 @@
                         </l-marker>
                     </l-layer-group>
                 </l-layer-group>
+
+                <!-- Fire Group -->
                 <l-layer-group
                         v-for="item in fire"
                         :key="item.id"
                         :visible.sync="item.visible"
                         layer-type="overlay"
-                        name="Fire: ไฟใหม้"
-                >
+                        name="Fire: ไฟใหม้">
                     <l-layer-group :visible="item.markersVisible">
                         <l-marker
                                 v-for="marker in item.markers"
@@ -147,6 +143,8 @@
                         />
                     </l-layer-group>
                 </l-layer-group>
+
+                <!-- Radio Group -->
                 <l-layer-group
                         v-for="item in radio"
                         :key="item.id"
@@ -165,13 +163,14 @@
                         />
                     </l-layer-group>
                 </l-layer-group>
+
+                <!-- Tree Group -->
                 <l-layer-group
                         v-for="item in tree"
                         :key="item.id"
                         :visible.sync="item.visible"
                         layer-type="overlay"
-                        name="Tree: ต้นไม้"
-                >
+                        name="Tree: ต้นไม้">
                     <l-layer-group :visible="item.markersVisible">
                         <l-marker
                                 v-for="marker in item.markers"
@@ -180,8 +179,7 @@
                                 :draggable="marker.draggable"
                                 :lat-lng="marker.position"
                                 :icon="iconTree"
-                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "
-                        />
+                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "/>
                     </l-layer-group>
                 </l-layer-group>
             </l-map>
@@ -263,16 +261,6 @@
     methods: {
       async findFromFirestore() {
         try {
-          //firebase.firestore()
-          //  .collection("geolocation")
-          //  .get()
-          //  .then(querySnapshot => {
-          //    querySnapshot.forEach(doc => {
-          //      console.log("nat", doc.data());
-          //    });
-          //  });
-
-          // Alert
           firebase
             .firestore()
             .collection("geolocation")
