@@ -128,44 +128,6 @@
                     </l-layer-group>
                 </l-layer-group>
 
-                <!-- Radio Group -->
-                <l-layer-group
-                        v-for="item in radio"
-                        :key="item.id"
-                        :visible.sync="item.visible"
-                        layer-type="overlay"
-                        name="Radio: วิทยุ">
-                    <l-layer-group :visible="item.markersVisible">
-                        <l-marker
-                                v-for="marker in item.markers"
-                                :key="marker.id"
-                                :visible="marker.visible"
-                                :draggable="marker.draggable"
-                                :lat-lng="marker.position"
-                                :icon="iconRadio"
-                                @click="makerClick(marker)"/>
-                        />
-                    </l-layer-group>
-                </l-layer-group>
-
-                <!-- Tree Group -->
-                <l-layer-group
-                        v-for="item in tree"
-                        :key="item.id"
-                        :visible.sync="item.visible"
-                        layer-type="overlay"
-                        name="Tree: ต้นไม้">
-                    <l-layer-group :visible="item.markersVisible">
-                        <l-marker
-                                v-for="marker in item.markers"
-                                :key="marker.id"
-                                :visible="marker.visible"
-                                :draggable="marker.draggable"
-                                :lat-lng="marker.position"
-                                :icon="iconTree"
-                                @click="makerClick(marker)"/>
-                    </l-layer-group>
-                </l-layer-group>
             </l-map>
         </v-app>
     </div>
@@ -185,8 +147,8 @@
     LControlScale,
     LControlLayers
   } from "vue2-leaflet";
-  import axios from "axios";
 
+  import * as Vue2Leaflet from 'vue2-leaflet'; // VALID
   import * as firebase from "firebase/app";
 
   import "firebase/analytics";
