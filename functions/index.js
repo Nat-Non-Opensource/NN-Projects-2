@@ -10,6 +10,7 @@ const cors = require("cors")({
   origin: true
 });
 
+const app = express();
 const router = express.Router();
 app.use(cors);
 app.use("/", router);
