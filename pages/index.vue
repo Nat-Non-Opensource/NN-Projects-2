@@ -42,14 +42,10 @@
                             <p v-else>{{ ptype }}</p>
                         </v-card-text>
                         <v-card-text>
-
-                            <!--              <audio controls>-->
-                            <!--                <source :src="require('@/assets/sound.wav') type="audio/wav" style="width:100%;">-->
-                            <!--                Your browser does not support the audio element.-->
-
-                            <!--                Your browser does not support the audio element.-->
-                            <!--              </audio>-->
-                            <audio src="https://firebasestorage.googleapis.com/v0/b/vuemap-c0443.appspot.com/o/2020-06-15T07_37_45.354Z.wav?alt=media&token=c5bb3e7a-62e4-4f77-9fa0-c9cc6110b8b0" controls></audio>
+                            <audio controls>
+                                <source v-bind:src="psound">
+                            </audio>
+                            <!--                            <audio src="{{psound}}" controls></audio>-->
                         </v-card-text>
 
                         <!--            <v-card-text> คำอธิบาย: </v-card-text>-->
@@ -117,8 +113,7 @@
                                 :visible="marker.visible"
                                 :draggable="marker.draggable"
                                 :lat-lng="marker.position"
-                                :icon="iconAlert"
-                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; ">
+                                :icon="iconAlert" @click="makerClick(marker)">
                             <l-tooltip :content="marker.tooltip"/>
                         </l-marker>
                     </l-layer-group>
@@ -139,8 +134,7 @@
                                 :draggable="item.draggable"
                                 :lat-lng="marker.position"
                                 :icon="iconFire"
-                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "
-                        />
+                                @click="makerClick(marker)"/>
                     </l-layer-group>
                 </l-layer-group>
 
@@ -159,7 +153,7 @@
                                 :draggable="marker.draggable"
                                 :lat-lng="marker.position"
                                 :icon="iconRadio"
-                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "
+                                @click="makerClick(marker)"/>
                         />
                     </l-layer-group>
                 </l-layer-group>
@@ -179,7 +173,7 @@
                                 :draggable="marker.draggable"
                                 :lat-lng="marker.position"
                                 :icon="iconTree"
-                                @click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "/>
+                                @click="makerClick(marker)"/>
                     </l-layer-group>
                 </l-layer-group>
             </l-map>
@@ -259,6 +253,18 @@
     },
     created() {},
     methods: {
+      makerClick: function(marker) {
+        console.log("markerClick", marker.sound);
+        this.dialog = true;
+        this.pname = marker.tooltip;
+        this.ptype = marker.type;
+        this.pdesc = marker.desc;
+        this.plat = marker.position.lat;
+        this.plng = marker.position.lng;
+        this.psound = marker.sound;
+        //this.pname =
+        //@click=" dialog = true; pname = marker.tooltip; ptype = marker.type; pdesc = marker.desc; plat = marker.position.lat; plng = marker.position.lng; "/>
+      },
       async findFromFirestore() {
         try {
           firebase
@@ -329,6 +335,7 @@
         pdesc: "",
         plat: 0.0,
         plng: 0.0,
+        psound: "",
         pimg: "",
         alert: [
           {
