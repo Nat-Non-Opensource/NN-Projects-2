@@ -49,9 +49,6 @@
                 >นำทางไปที่ตำแหน่ง</a
               >
             </v-card-text>
-            <v-card-text>
-              Picture:
-            </v-card-text>
           </v-card>
         </v-dialog>
       </v-row>
