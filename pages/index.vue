@@ -88,16 +88,6 @@
                         :position="attributionPosition"
                         :prefix="attributionPrefix"/>
                 <l-control-scale :imperial="imperial"/>
-                <l-marker
-                        v-for="marker in markers"
-                        :key="marker.id"
-                        :visible="marker.visible"
-                        :draggable="marker.draggable"
-                        :lat-lng.sync="marker.position"
-                        :icon="marker.icon">
-                    <l-tooltip :content="marker.tooltip"/>
-                    <l-popup :content="marker.tooltip"/>
-                </l-marker>
 
                 <!-- Alert Group -->
                 <l-layer-group
