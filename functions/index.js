@@ -7,9 +7,5 @@ const functions = require('firebase-functions');
 //  response.send("Hello from Firebase!");
 // });
 
-exports.uploadFile = (req, res) => {
-    if (req.method !== 'POST') {
-      // Return a "method not allowed" error
-      return res.status(405).end();
-    }
-}
+exports.httpReq = functions.https.onRequest((req, res) => {
+});
