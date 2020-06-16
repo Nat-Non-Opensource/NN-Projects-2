@@ -10,8 +10,7 @@
               </v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
-            <v-card-title class="headline"> {{ pname }}</v-card-title>
-            <v-card-subtitle>
+            <!-- <v-card-subtitle>
               <p
                 style="display: inline; color: rgb(210, 210, 210);"
                 v-if="pact"
@@ -21,21 +20,25 @@
               <p style="display: inline; color: rgb(210, 210, 210);" v-else>
                 ไม่บริการ
               </p>
-            </v-card-subtitle>
+            </v-card-subtitle> -->
             <v-card-text
               ><p v-if="ptype === 'alert'">
-                ALERT: แจ้งเตือนภัย
+                <img src="~/assets/alert.png">
+                Alert: แจ้งเตือนภัย
               </p>
               <p v-else-if="ptype === 'fire'">
-                FIRE: ไฟใหม้
+                <img src="~/assets/fire.png">
+                Fire: ไฟใหม้
               </p>
               <p v-else-if="ptype === 'radio'">
-                RADIO: วิทยุ
+                <img src="~/assets/radio.png">
+                Radio: วิทยุ
               </p>
               <p v-else-if="ptype === 'tree'">
-                TREE: ต้นไม้
+                <img src="~/assets/tree.png">
+                Tree: ต้นไม้
               </p>
-              <p v-else>{{ ptype }}UNKNOWN: ไม่รู้จัก</p></v-card-text
+              <p v-else>{{ ptype }}</p></v-card-text
             >
             <v-card-text> คำอธิบาย: </v-card-text>
             <v-card-text>
@@ -110,12 +113,10 @@
               @click="
                 dialog = true;
                 pname = marker.tooltip;
-                pact = marker.active;
                 ptype = marker.type;
                 pdesc = marker.desc;
                 plat = marker.position.lat;
                 plng = marker.position.lng;
-                pimg = '';
               "
               ><l-tooltip :content="marker.tooltip"
             /></l-marker>
@@ -139,12 +140,10 @@
               @click="
                 dialog = true;
                 pname = marker.tooltip;
-                pact = marker.active;
                 ptype = marker.type;
                 pdesc = marker.desc;
                 plat = marker.position.lat;
                 plng = marker.position.lng;
-                pimg = '';
               "
             />
           </l-layer-group>
@@ -167,12 +166,10 @@
               @click="
                 dialog = true;
                 pname = marker.tooltip;
-                pact = marker.active;
                 ptype = marker.type;
                 pdesc = marker.desc;
                 plat = marker.position.lat;
                 plng = marker.position.lng;
-                pimg = '';
               "
             />
           </l-layer-group>
@@ -195,12 +192,10 @@
               @click="
                 dialog = true;
                 pname = marker.tooltip;
-                pact = marker.active;
                 ptype = marker.type;
                 pdesc = marker.desc;
                 plat = marker.position.lat;
                 plng = marker.position.lng;
-                pimg = '';
               "
             />
           </l-layer-group>
@@ -280,13 +275,7 @@ export default {
   mounted() {
     this.findFromFirestore();
   },
-  created() {
-    // firebase.functions.firestore.documents.onCreate((snap, context) => {
-    //   this.findFromFirestore();
-    // })
-
-    // this.interval = setInterval(() => this.findFromFirestore(), 5000);
-  },
+  created() {},
   methods: {
     async findFromFirestore() {
       try {
@@ -304,7 +293,7 @@ export default {
                   lng: doc.data().loc.Ac,
                 },
                 tooltip: doc.data().name,
-                types: "alert",
+                type: "alert",
                 visible: true,
                 draggable: false,
               });
@@ -325,7 +314,7 @@ export default {
                   lng: doc.data().loc.Ac,
                 },
                 tooltip: doc.data().name,
-                types: "fire",
+                type: "fire",
                 visible: true,
                 draggable: false,
               });
@@ -346,7 +335,7 @@ export default {
                   lng: doc.data().loc.Ac,
                 },
                 tooltip: doc.data().name,
-                types: "radio",
+                type: "radio",
                 visible: true,
                 draggable: false,
               });
@@ -367,7 +356,7 @@ export default {
                   lng: doc.data().loc.Ac,
                 },
                 tooltip: doc.data().name,
-                types: "tree",
+                type: "tree",
                 visible: true,
                 draggable: false,
               });
@@ -403,7 +392,6 @@ export default {
       markers: [],
       dialog: false,
       pname: "",
-      pact: "",
       ptype: "",
       pdesc: "",
       plat: 0.0,

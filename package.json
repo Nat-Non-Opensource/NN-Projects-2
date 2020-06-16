@@ -12,12 +12,15 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "child-process-promise": "^2.2.1",
+    "escape-html": "^1.0.3",
     "firebase": "^7.15.1",
     "nuxt": "^2.12.2",
-    "nuxt-leaflet": "^0.0.11",
-    "escape-html": "^1.0.3"
+    "nuxt-leaflet": "^0.0.11"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.11.2"
+    "@babel/runtime-corejs2": "^7.10.2",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "core-js": "2"
   }
 }
